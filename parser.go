@@ -14,6 +14,15 @@ const (
 	BIG_ENDIAN    = 1
 )
 
+// This is a wrapper function for simpler usage
+func Parse(
+	stream *os.File,
+	typ reflect.Type,
+	end uint,
+) {
+	ParseStructFromBinaryStream(stream, typ, end)
+}
+
 // main parse function dealing with file stream to parse arbitrary
 // struct from that stream
 // notice that this function can only parse linearly, high level

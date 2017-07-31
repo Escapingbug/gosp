@@ -22,27 +22,31 @@ func TestParserInt(t *testing.T) {
 	if ok != nil {
 		t.Error("unable to open created struct, error is ", ok)
 	}
-	parsed, ok := ParseStructFromBinaryStream(f, reflect.TypeOf(MyStruct{}), LITTLE_ENDIAN)
+	parsed, ok := ParseStructFromBinaryStream(f, reflect.TypeOf(MyStruct{}), BIG_ENDIAN)
 	if ok != nil {
 		t.Error("parse error ", ok)
 	}
 	val, assertComplete := parsed.(reflect.Value)
-    if !assertComplete {
-        t.Error("Value type assertion error")
-    }
+	if !assertComplete {
+		t.Error("Value type assertion error")
+	}
 
-    realVal, assertComplete := val.Interface().(MyStruct)
-    if !assertComplete {
-        t.Error("real struct type assertion error")
-    }
+	realVal, assertComplete := val.Interface().(MyStruct)
+	if !assertComplete {
+		t.Error("real struct type assertion error")
+	}
 
-    realVal.Num = 1
-    if (realVal.Num != 1) {
-        t.Error("error")
-    }
+	if realVal.Num != 16045690984833335023 {
+		t.Error("value is wrong")
+	}
 
-    ok = os.Remove("tempStruct")
-    if ok != nil {
-        t.Error("temp file delete error")
-    }
+	realVal.Num = 1
+	if realVal.Num != 1 {
+		t.Error("error")
+	}
+
+	ok = os.Remove("tempStruct")
+	if ok != nil {
+		t.Error("temp file delete error")
+	}
 }
