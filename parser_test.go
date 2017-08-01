@@ -22,16 +22,12 @@ func TestParserInt(t *testing.T) {
 	if ok != nil {
 		t.Error("unable to open created struct, error is ", ok)
 	}
-	parsed, ok := ParseStructFromBinaryStream(f, reflect.TypeOf(MyStruct{}), BIG_ENDIAN)
+	parsed, ok := Parse(f, reflect.TypeOf(MyStruct{}), BIG_ENDIAN)
 	if ok != nil {
 		t.Error("parse error ", ok)
 	}
-	val, assertComplete := parsed.(reflect.Value)
-	if !assertComplete {
-		t.Error("Value type assertion error")
-	}
-
-	realVal, assertComplete := val.Interface().(MyStruct)
+	val, assertComplete := parsed.Interface().(MyStruct)
+    realVal := val
 	if !assertComplete {
 		t.Error("real struct type assertion error")
 	}

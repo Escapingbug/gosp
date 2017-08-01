@@ -35,23 +35,15 @@ So to parse this file, we use ParseStructFromBinaryFile function, name is a litt
 
 Like this:
 ```
-parsed, ok := parser.ParseStructFromBinaryFile(file, reflect.TypeOf(MyStruct{}), parser.BIG_ENDIAN)
-```
-
-Even simpler:
-```
 parsed, ok := parser.Parse(file, reflect.TypeOf(MyStruct{}), parser.BIG_ENDIAN)
 ```
-Parse is just a shorter version of ParseStructFromBinaryFile.
 
-Now parsed is a reflect.Value without type assertion, we need to do type assertion twice to get to our target type
-
+But we haven't type asserted yet, we should do that first
 ```
-once, _ := parsed.(reflect.Value)
-twice, _ := once.(MyStruct)
+parsedVal _ := parsed.(MyStruct)
 ```
 
-And now twice is our struct, with value like this:
+And now `parsedVal` is our struct, with value like this:
 ```
 MyStruct:
     Num: 16045690984833335023

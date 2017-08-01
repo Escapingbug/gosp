@@ -19,8 +19,14 @@ func Parse(
 	stream *os.File,
 	typ reflect.Type,
 	end uint,
-) (interface{}, error){
-	return ParseStructFromBinaryStream(stream, typ, end)
+) (reflect.Value, error){
+    // this has to be asserted, and it should be success
+    parsed, ok := ParseStructFromBinaryStream(stream, typ, end)
+    if ok != nil {
+        return reflect.ValueOf(0), ok
+    }
+    parsedVal, _ := parsed.(reflect.Value)
+    return parsedVal, ok
 }
 
 // main parse function dealing with file stream to parse arbitrary
