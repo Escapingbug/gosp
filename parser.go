@@ -19,8 +19,8 @@ func Parse(
 	stream *os.File,
 	typ reflect.Type,
 	end uint,
-) {
-	ParseStructFromBinaryStream(stream, typ, end)
+) (interface{}, error){
+	return ParseStructFromBinaryStream(stream, typ, end)
 }
 
 // main parse function dealing with file stream to parse arbitrary
